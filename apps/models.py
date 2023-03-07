@@ -8,12 +8,19 @@ ACCESS_OPTIONS = (
     ('admin', 'Admin'),
 )
 
+LANGUAGES = (
+    ('python-coveragepy', 'Python (Coverage.py)'),
+    ('python-pytest', 'Python (Pytest)'),
+    ('javascript-jest', 'JavaScript (Jest) (Coming soon)')
+)
+
 
 class Project(models.Model):
     """The project model."""
     name = models.CharField(max_length=50)
     description = models.TextField()
     source = models.URLField()
+    language = models.CharField(max_length=30, choices=LANGUAGES)
 
     def __str__(self):
         return self.name

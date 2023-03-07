@@ -1,6 +1,6 @@
 from django import forms
 
-from apps.models import Project
+from apps.models import Project, LANGUAGES
 
 
 class CreateProjectForm(forms.ModelForm):
@@ -25,9 +25,16 @@ class CreateProjectForm(forms.ModelForm):
         widget=forms.URLInput(attrs={'class': 'form-control', 'placeholder': 'https://github.com/asuna/mother-rosario'})
     )
 
+    language = forms.ChoiceField(
+        label='Language',
+        help_text='Language and test framework used in the project.',
+        choices=LANGUAGES,
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
+
     class Meta:
         model = Project
-        fields = ['name', 'description', 'source']
+        fields = ['name', 'description', 'source', 'language']
 
 
 class UploadKeyRenewConfirmationForm(forms.Form):
