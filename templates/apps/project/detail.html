@@ -51,7 +51,7 @@
                 {% endif %}
                 <p>Total coverage : {{ coverage.coverage|floatformat }}%</p>
                 <a href="{% url 'apps_coverage_report' project.id coverage.id %}" class="btn btn-primary">Open report</a>
-                <a href="#" class="btn btn-primary">Full report</a>
+                <a href="{% url 'apps_coverage_full_report' project.id coverage.id %}" class="btn btn-primary">Full report</a>
             </div>
         </div>
     {% endfor %}

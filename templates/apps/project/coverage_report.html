@@ -15,11 +15,13 @@
     </nav>
     <div class="d-flex" style="padding-bottom: 1rem;">
         <h1>{% if coverage.name %}{{ coverage.name }}{% else %}Coverage report at {{ coverage.date }}{% endif %}</h1>
+        {% if full_report %}
         <span class="align-middle ms-auto">
-            <a type="button" class="btn btn-primary" href="#">
-                <span class="mdi mdi-chart-bar" aria-hidden="true" style="font-size: 20px"></span>
+            <a type="button" class="btn btn-primary" href="{% url 'apps_coverage_full_report' project.id coverage.id %}">
+                <span class="mdi mdi-chart-bar" aria-hidden="true" style="font-size: 20px"></span> Full report
             </a>
         </span>
+        {% endif %}
     </div>
 
     <p>Total coverage : {{ coverage.coverage|floatformat }} %</p>

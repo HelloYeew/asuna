@@ -42,6 +42,7 @@ class ProjectAccess(models.Model):
 class CoverageSummary(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     name = models.CharField(max_length=100, blank=True, null=True)
+    description = models.TextField(blank=True, null=True)
     coverage = models.FloatField()
     date = models.DateTimeField(auto_now_add=True)
 

@@ -1,3 +1,6 @@
+import os
+
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
@@ -170,3 +173,39 @@ def coverage_report(request, project_id, coverage_report_id):
         'coverage': coverage,
         'full_report': full_report[0] if full_report else None
     })
+
+
+@login_required
+def coverage_full_report(request, project_id, coverage_report_id):
+    # Check project access
+    project = Project.objects.filter(id=project_id)
+    if not project:
+        return render(request, '404.html', status=404)
+    project = project[0]
+    project_access = ProjectAccess.objects.filter(project_id=project_id, user=request.user)
+    if not project_access:
+        return render(request, '404.html', status=404)
+    project_access = project_access[0]
+
+    # Check compatibility between project and coverage report
+    # Coverage report is match with project
+    coverage = CoverageSummary.objects.filter(id=coverage_report_id)
+    if not coverage:
+        return render(request, '404.html', status=404)
+    coverage = coverage[0]
+    if coverage.project_id != project_id:
+        return render(request, '404.html', status=404)
+
+    # Get full report
+    full_report = CoverageRawDetail.objects.filter(summary_id=coverage_report_id)
+    if not full_report:
+        messages.error(request, 'Full report not found!')
+        return redirect('apps_coverage_report', project_id=project_id, coverage_report_id=coverage_report_id)
+    full_report = full_report[0]
+    # Redirect to media file path
+    # Get path of media file media/coverage_detail/{project.id}/{upload_folder_name}/index.html
+    media_path = os.path.join(settings.MEDIA_ROOT, 'coverage_detail', str(project.id), full_report.folder_name, 'index.html')
+    if not os.path.exists(media_path):
+        messages.error(request, 'Full report not found!')
+        return redirect('apps_coverage_report', project_id=project_id, coverage_report_id=coverage_report_id)
+    return redirect(settings.MEDIA_URL + 'coverage_detail/' + str(project.id) + '/' + full_report.folder_name + '/index.html')

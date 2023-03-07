@@ -28,6 +28,7 @@ urlpatterns = [
     path('logout/', users_views.LogoutAndRedirect.as_view(), name='logout'),
     path('apps/', include('apps.urls')),
     path('', include('pages.urls')),
+    path('api/coverage/', include('coverage_apis.urls')),
 ]
 
 if settings.DEBUG:
