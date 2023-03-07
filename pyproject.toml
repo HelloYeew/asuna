@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "asuna"
 version = "0.1.0"
-description = ""
+description = "A code coverage report tool"
 authors = ["Phawit Pornwattanakul <me@helloyeew.dev>"]
 readme = "README.md"
 
