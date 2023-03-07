@@ -23,6 +23,17 @@ def home(request):
 
 
 @login_required
+def project_list(request):
+    all_project_access = ProjectAccess.objects.filter(user=request.user)
+    projects = []
+    for project_access in all_project_access:
+        projects.append(project_access.project)
+    return render(request, 'apps/project/list.html', {
+        'projects': projects
+    })
+
+
+@login_required
 def create_project(request):
     if request.method == 'POST':
         form = CreateProjectForm(request.POST)
@@ -72,6 +83,36 @@ def project_detail(request, project_id):
         'project_access': project_access,
         'not_setup_key': not_setup_key,
         'all_coverage': all_coverage
+    })
+
+
+@login_required
+def edit_project(request, project_id):
+    # Check project access
+    project = Project.objects.filter(id=project_id)
+    if not project:
+        return render(request, '404.html', status=404)
+    project = project[0]
+    project_access = ProjectAccess.objects.filter(project_id=project_id, user=request.user)
+    if not project_access:
+        return render(request, '404.html', status=404)
+    project_access = project_access[0]
+    if project_access.access_option != 'admin':
+        return render(request, '403.html', status=403)
+
+    # Check project action setup status
+    if request.method == 'POST':
+        form = CreateProjectForm(request.POST, instance=project)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Project updated successfully!')
+            return redirect('apps_project_detail', project_id=project.id)
+    else:
+        form = CreateProjectForm(instance=project)
+    return render(request, 'apps/project/edit.html', {
+        'project': project,
+        'project_access': project_access,
+        'form': form
     })
 
 

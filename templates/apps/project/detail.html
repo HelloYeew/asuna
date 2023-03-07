@@ -32,6 +32,7 @@
     <div style="padding-bottom: 1rem;">
     {% if project_access.access_option == 'admin' %}
     <a href="#" class="btn btn-primary"><i class="mdi mdi-cog" aria-hidden="true" style="font-size: 20px"></i> Manage Permission</a>
+    <a href="{% url 'apps_edit_project' project.id %}" class="btn btn-primary"><i class="mdi mdi-pencil" aria-hidden="true" style="font-size: 20px"></i> Edit project detail</a>
     <a href="{% url 'apps_project_upload_key' project.id %}" class="btn btn-primary"><i class="mdi mdi-key" aria-hidden="true" style="font-size: 20px"></i> Upload Key</a>
     {% endif %}
     </div>
