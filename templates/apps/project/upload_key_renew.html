@@ -1,0 +1,31 @@
+{% extends "base_apps.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}Renew upload key{% endblock %}
+
+{% block styles %}
+
+{% endblock %}
+
+{% block content %}
+    <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'apps_project_detail' project.id %}">{{ project.name }}</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'apps_project_upload_key' project.id %}">Upload key</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Renew upload key</li>
+        </ol>
+    </nav>
+    <h1 style="padding-top: 1rem; padding-bottom: 1rem;">Renew upload key</h1>
+    <p></p>
+    <p>Do you want to renew the upload key? This will invalidate the current upload key and create a new one.</p>
+    <p>For security reasons, you will need to enter your password to confirm this action.</p>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form | crispy }}
+        <button type="submit" class="btn btn-primary">Renew</button>
+    </form>
+{% endblock %}
+
+{% block scripts %}
+
+{% endblock %}

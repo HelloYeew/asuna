@@ -1,0 +1,65 @@
+{% extends "base_apps.html" %}
+
+{% block title %}{{ project.name }} Detail{% endblock %}
+
+{% block styles %}
+
+{% endblock %}
+
+{% block content %}
+    {% if not_setup_key %}
+    <div class="alert alert-warning" role="alert">
+        You have not set up your upload key, please go to <a href="{% url 'apps_project_upload_key' project.id %}">Project Key Setup</a> to setup a new one!
+    </div>
+    {% endif %}
+
+    <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page">{{ project.name }}</li>
+        </ol>
+    </nav>
+    <div class="d-flex" style="padding-bottom: 1rem;">
+        <h1>{{ project.name }}</h1>
+        <span class="align-middle ms-auto">
+            <a type="button" class="btn btn-primary" href="{{ project.source }}">
+                <span class="mdi mdi-source-repository" aria-hidden="true" style="font-size: 20px"></span>
+            </a>
+        </span>
+    </div>
+
+    <p>{{ project.description }}</p>
+
+    <div style="padding-bottom: 1rem;">
+    {% if project_access.access_option == 'admin' %}
+    <a href="#" class="btn btn-primary"><i class="mdi mdi-cog" aria-hidden="true" style="font-size: 20px"></i> Manage Permission</a>
+    <a href="{% url 'apps_project_upload_key' project.id %}" class="btn btn-primary"><i class="mdi mdi-key" aria-hidden="true" style="font-size: 20px"></i> Upload Key</a>
+    {% endif %}
+    </div>
+
+    <h2>All Coverage Report{% if all_coverage|length > 1 %}s{% endif %}</h2>
+    {% if all_coverage %}
+    {% for coverage in all_coverage %}
+        <div class="row m-2 project-row">
+            <div class="col-1">
+                <i class="mdi mdi-chart-bar" aria-hidden="true" style="font-size: 50px"></i>
+            </div>
+            <div class="col-11">
+                {% if coverage.name %}
+                <h3>{{ coverage.name }}</h3>
+                {% else %}
+                <h3>Coverage report at {{ coverage.date }}</h3>
+                {% endif %}
+                <p>Total coverage : {{ coverage.coverage|floatformat }}%</p>
+                <a href="{% url 'apps_coverage_report' project.id coverage.id %}" class="btn btn-primary">Open report</a>
+                <a href="#" class="btn btn-primary">Full report</a>
+            </div>
+        </div>
+    {% endfor %}
+    {% else %}
+        <p>No report available</p>
+    {% endif %}
+{% endblock %}
+
+{% block scripts %}
+
+{% endblock %}

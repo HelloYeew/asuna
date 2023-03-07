@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "asuna"
+version = "0.1.0"
+description = ""
+authors = ["Phawit Pornwattanakul <me@helloyeew.dev>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+django = "^4.1.7"
+python-decouple = "^3.8"
+django-admin-interface = "^0.24.2"
+django-crispy-forms = "^2.0"
+gunicorn = "^20.1.0"
+psycopg2-binary = "^2.9.5"
+crispy-bootstrap5 = "^0.7"
+djangorestframework = "^3.14.0"
+markdown = "^3.4.1"
+django-filter = "^22.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

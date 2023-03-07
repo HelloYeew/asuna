@@ -1,0 +1,38 @@
+{% extends "base_apps.html" %}
+
+{% block title %}{{ project.name }} Upload Key{% endblock %}
+
+{% block styles %}
+
+{% endblock %}
+
+{% block content %}
+    <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'apps_project_detail' project.id %}">{{ project.name }}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Upload Key</li>
+        </ol>
+    </nav>
+    <div class="d-flex" style="padding-bottom: 1rem;">
+        <h1>Upload Key</h1>
+        <span class="align-middle ms-auto">
+            <a type="button" class="btn btn-primary" href="{% url 'apps_project_upload_key_renew' project.id %}">
+                <span class="mdi mdi-key-plus" aria-hidden="true" style="font-size: 16px"></span> Renew
+            </a>
+        </span>
+    </div>
+
+    <p>Last updated at {{ upload_key.setup_at }} UTC</p>
+
+    <p>Upload key is</p>
+
+    <div style="background-color: var(--asuna-background-darker); border-radius: 5px; padding: 10px; margin-bottom: 1rem;">
+        <code style="user-select:all; font-size: 24px;">{{ upload_key.key }}</code>
+    </div>
+
+    <p>Please keep this key safe. It will be used in your app repository's CI pipeline to upload the coverage report to {{ project.name }}.</p>
+{% endblock %}
+
+{% block scripts %}
+
+{% endblock %}

@@ -1,0 +1,106 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap');
+
+* {
+    --asuna-background: #fefafa;
+    --asuna-background-rgb: 254, 250, 250;
+    --asuna-background-darker: #ffdede;
+    --asuna-background-darker-rgb: 255, 209, 209;
+    --asuna-border: #eab0b6;
+    --asuna-border-rgb: 234, 176, 182;
+    --asuna-disabled: #ea727c;
+    --asuna-disabled-rgb: 234, 114, 124;
+    --asuna-primary: #c43b4d;
+    --asuna-primary-rgb: 196, 59, 77;
+    --asuna-hover: #85334c;
+    --asuna-hover-rgb: 133, 51, 76;
+    --asuna-text: #292121;
+    --asuna-text-rgb: 41, 33, 33;
+    --asuna-translucent: rgba(101, 76, 79, 0.17);
+
+    --bs-body-bg: var(--asuna-background);
+    --bs-body-bg-rgb: var(--asuna-background-rgb);
+    --bs-body-color: var(--asuna-text);
+    --bs-body-color-rgb: var(--asuna-text-rgb);
+    --bs-tertiary-bg: var(--asuna-background-darker);
+    --bs-tertiary-bg-rgb: var(--asuna-background-darker-rgb);
+    --bs-border-width: 1px;
+    --bs-border-color-translucent: var(--asuna-translucent);
+
+    font-family: 'Comfortaa', cursive;
+    font-size: 16px;
+
+    transition: all .2s;
+}
+
+::selection {
+    color: var(--asuna-background);
+    background: var(--asuna-disabled);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--asuna-primary);
+}
+
+.btn-primary {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: var(--asuna-primary);
+    --bs-btn-border-color: var(--asuna-primary);
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: var(--asuna-hover);
+    --bs-btn-hover-border-color: var(--asuna-hover);
+    --bs-btn-focus-shadow-rgb: 0, 123, 255;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: var(--asuna-hover);
+    --bs-btn-active-border-color: var(--asuna-hover);
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: #fff;
+    --bs-btn-disabled-bg: var(--asuna-disabled);
+    --bs-btn-disabled-border-color: var(--asuna-disabled);
+}
+
+.btn-primary:hover {
+    background-color: var(--asuna-hover);
+    filter: brightness(85%);
+    transition: all .2s;
+    box-shadow: 0 0 15px var(--asuna-hover);
+}
+
+.btn-primary:focus {
+    outline: none;
+    background-color: var(--asuna-hover);
+    filter: brightness(85%);
+}
+
+a {
+    color: var(--asuna-primary);
+    text-decoration: none;
+}
+
+a:hover {
+    color: var(--asuna-hover);
+}
+
+.form-control {
+    color: var(--bs-body-color);
+    background-color: var(--asuna-background);
+    border: var(--bs-border-width) solid var(--asuna-border);
+}
+
+.form-control:focus {
+    color: var(--bs-body-color);
+    background-color: var(--asuna-background);
+    border-color: var(--asuna-border);
+    outline: 0;
+    box-shadow: 0 0 0 3px rgba(var(--asuna-border-rgb), 0.5);
+}
+
+.dropdown-menu {
+    --bs-dropdown-bg: var(--asuna-background);
+    --bs-dropdown-link-color: var(--bs-body-color);
+    --bs-dropdown-link-hover-color: var(--bs-body-color);
+    --bs-dropdown-link-hover-bg: var(--bs-tertiary-bg);
+    --bs-dropdown-link-active-color: var(--asuna-background);
+    --bs-dropdown-link-active-bg: var(--asuna-disabled);
+    --bs-dropdown-link-disabled-color: #adb5bd;
+    --bs-dropdown-header-color: var(--asuna-primary);
+}
