@@ -1,0 +1,189 @@
+{% load convert_json %}
+
+<h3>Summary</h3>
+{% with summary=full_report_json.total %}
+    <div class="row">
+        <div class="col-md-3">
+            <strong>Total lines</strong>
+        </div>
+        <div class="col-md-9">
+            {{ summary.lines.total }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <strong>Covered lines</strong>
+        </div>
+        <div class="col-md-9">
+            {{ summary.lines.covered }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <strong>Skipped lines</strong>
+        </div>
+        <div class="col-md-9">
+            {{ summary.lines.skipped }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <strong>Line percentage covered</strong>
+        </div>
+        <div class="col-md-9">
+            {{ summary.lines.pct }}%
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-3">
+            <strong>Total statements</strong>
+        </div>
+        <div class="col-md-9">
+            {{ summary.statements.total }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <strong>Covered statements</strong>
+        </div>
+        <div class="col-md-9">
+            {{ summary.statements.covered }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <strong>Skipped statements</strong>
+        </div>
+        <div class="col-md-9">
+            {{ summary.statements.skipped }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <strong>Statement percentage covered</strong>
+        </div>
+        <div class="col-md-9">
+            {{ summary.statements.pct }}%
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-3">
+            <strong>Total functions</strong>
+        </div>
+        <div class="col-md-9">
+            {{ summary.functions.total }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <strong>Covered functions</strong>
+        </div>
+        <div class="col-md-9">
+            {{ summary.functions.covered }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <strong>Skipped functions</strong>
+        </div>
+        <div class="col-md-9">
+            {{ summary.functions.skipped }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <strong>Function percentage covered</strong>
+        </div>
+        <div class="col-md-9">
+            {{ summary.functions.pct }}%
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-3">
+            <strong>Total branches</strong>
+        </div>
+        <div class="col-md-9">
+            {{ summary.branches.total }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <strong>Covered branches</strong>
+        </div>
+        <div class="col-md-9">
+            {{ summary.branches.covered }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <strong>Skipped branches</strong>
+        </div>
+        <div class="col-md-9">
+            {{ summary.branches.skipped }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <strong>Branch percentage covered</strong>
+        </div>
+        <div class="col-md-9">
+            {{ summary.branches.pct }}%
+        </div>
+    </div>
+{% endwith %}
+
+<br>
+
+<h3>File</h3>
+<p>More detail in <a href="{% url 'apps_coverage_full_report' project.id coverage.id %}">full report</a>.</p>
+{% with file_list=full_report_json|convert_json %}
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col" rowspan="2">File</th>
+            <th scope="col" colspan="3">Lines</th>
+            <th scope="col" colspan="3">Functions</th>
+            <th scope="col" colspan="3">Statements</th>
+            <th scope="col" colspan="3">Branches</th>
+        </tr>
+        <tr>
+            <th scope="col">Covered</th>
+            <th scope="col">Skipped</th>
+            <th scope="col">%</th>
+            <th scope="col">Covered</th>
+            <th scope="col">Skipped</th>
+            <th scope="col">%</th>
+            <th scope="col">Covered</th>
+            <th scope="col">Skipped</th>
+            <th scope="col">%</th>
+            <th scope="col">Covered</th>
+            <th scope="col">Skipped</th>
+            <th scope="col">%</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for file in file_list %}
+        {% if file.key != "total" %}
+            <tr>
+                <th scope="row">{{ file.key }}</th>
+                <td>{{ file.value.lines.covered }}</td>
+                <td>{{ file.value.lines.skipped }}</td>
+                <td>{{ file.value.lines.pct }}%</td>
+                <td>{{ file.value.functions.covered }}</td>
+                <td>{{ file.value.functions.skipped }}</td>
+                <td>{{ file.value.functions.pct }}%</td>
+                <td>{{ file.value.statements.covered }}</td>
+                <td>{{ file.value.statements.skipped }}</td>
+                <td>{{ file.value.statements.pct }}%</td>
+                <td>{{ file.value.branches.covered }}</td>
+                <td>{{ file.value.branches.skipped }}</td>
+                <td>{{ file.value.branches.pct }}%</td>
+            </tr>
+        {% endif %}
+        {% endfor %}
+        </tbody>
+    </table>
+{% endwith %}

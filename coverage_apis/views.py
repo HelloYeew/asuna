@@ -1,6 +1,5 @@
 import os
 
-from django.shortcuts import render
 from django.urls import reverse
 from rest_framework import views, permissions, status
 from rest_framework.response import Response
