@@ -27,6 +27,7 @@ class CoverageUploadView(views.APIView):
             coverage_summary = CoverageSummary.objects.create(
                 project=project,
                 name=serializer.validated_data['name'],
+                description=serializer.validated_data['description'],
                 coverage=serializer.validated_data['percentage']
             )
             # Create coverage raw detail
