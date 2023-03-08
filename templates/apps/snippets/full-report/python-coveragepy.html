@@ -49,9 +49,9 @@
             <th scope="col">Missing lines</th>
             <th scope="col">Exclude lines</th>
             <th scope="col">Covered lines</th>
-            <th scope="col">Percent covered</th>
             <th scope="col">Missing lines count</th>
             <th scope="col">Exclude lines count</th>
+            <th scope="col">Percent covered</th>
         </tr>
     </thead>
     <tbody>
@@ -60,23 +60,23 @@
             <th scope="row">{{ file.key }}</th>
             <td>
                 {% for line in file.value.executed_lines %}
-                    {{ line }},
+                    {{ line }}{% if not forloop.last %},{% endif %}
                 {% endfor %}
             </td>
             <td>
                 {% for line in file.value.missing_lines %}
-                    {{ line }},
+                    {{ line }}{% if not forloop.last %},{% endif %}
                 {% endfor %}
             </td>
             <td>
                 {% for line in file.value.excluded_lines %}
-                    {{ line }},
+                    {{ line }}{% if not forloop.last %},{% endif %}
                 {% endfor %}
             </td>
             <td>{{ file.value.summary.covered_lines }}</td>
-            <td>{{ file.value.summary.percent_covered_display }}%</td>
             <td>{{ file.value.summary.missing_lines }}</td>
             <td>{{ file.value.summary.excluded_lines }}</td>
+            <td>{{ file.value.summary.percent_covered_display }}%</td>
         </tr>
         {% endfor %}
     </tbody>
