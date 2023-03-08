@@ -10,14 +10,14 @@ ACCESS_OPTIONS = (
 
 LANGUAGES = (
     ('python-coveragepy', 'Python (Coverage.py)'),
-    ('python-pytest', 'Python (Pytest)'),
-    ('javascript-jest', 'JavaScript (Jest) (Coming soon)')
+    ('javascript-jest', 'JavaScript (Jest)')
 )
 
 
 class Project(models.Model):
     """The project model."""
     name = models.CharField(max_length=50)
+    creator = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     description = models.TextField()
     source = models.URLField()
     language = models.CharField(max_length=30, choices=LANGUAGES)
