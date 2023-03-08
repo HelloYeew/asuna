@@ -51,6 +51,7 @@
                 <h3>Coverage report at {{ coverage.date }}</h3>
                 {% endif %}
                 <p>Total coverage : {{ coverage.coverage|floatformat }}%</p>
+                <p style="margin-top: 8px; margin-bottom: 8px;">Uploaded {{ coverage.date | timesince }} ago</p>
                 <a href="{% url 'apps_coverage_report' project.id coverage.id %}" class="btn btn-primary">Open report</a>
                 <a href="{% url 'apps_coverage_full_report' project.id coverage.id %}" class="btn btn-primary">Full report</a>
             </div>

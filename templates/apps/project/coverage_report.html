@@ -27,7 +27,11 @@
     <p>Total coverage : {{ coverage.coverage|floatformat }} %</p>
 
     {% if full_report %}
-
+    {% if project.language == 'python-coveragepy' %}
+        {% include 'apps/snippets/full-report/python-coveragepy.html' %}
+    {% else %}
+        <p>Full report not available for this language</p>
+    {% endif %}
     {% else %}
     <p>No full report available</p>
     {% endif %}

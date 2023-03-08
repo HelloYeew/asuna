@@ -1,3 +1,4 @@
+import json
 import os
 
 from django.conf import settings
@@ -77,7 +78,7 @@ def project_detail(request, project_id):
         not_setup_key = False
 
     # Get all coverage
-    all_coverage = CoverageSummary.objects.filter(project_id=project_id)
+    all_coverage = CoverageSummary.objects.filter(project_id=project_id).order_by('-date')
     return render(request, 'apps/project/detail.html', {
         'project': project,
         'project_access': project_access,
@@ -212,7 +213,8 @@ def coverage_report(request, project_id, coverage_report_id):
         'project': project,
         'project_access': project_access,
         'coverage': coverage,
-        'full_report': full_report[0] if full_report else None
+        'full_report': full_report[0] if full_report else None,
+        'full_report_json': dict(full_report[0].raw_detail) if full_report else None
     })
 
 

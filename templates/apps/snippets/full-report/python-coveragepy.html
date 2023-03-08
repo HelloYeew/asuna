@@ -1,0 +1,100 @@
+{% load convert_json %}
+
+<h3>Summary</h3>
+{% with summary=full_report_json.totals %}
+    <div class="row">
+        <div class="col-md-2">
+            <strong>Covered lines</strong>
+        </div>
+        <div class="col-md-10">
+            {{ summary.covered_lines }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            <strong>Percent covered</strong>
+        </div>
+        <div class="col-md-10">
+            {{ summary.percent_covered_display }}%
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            <strong>Missing lines</strong>
+        </div>
+        <div class="col-md-10">
+            {{ summary.missing_lines }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            <strong>Excluded lines</strong>
+        </div>
+        <div class="col-md-10">
+            {{ summary.excluded_lines }}
+        </div>
+    </div>
+{% endwith %}
+
+<br>
+
+<h3>File</h3>
+<p>More detail in <a href="{% url 'apps_coverage_full_report' project.id coverage.id %}">full report</a>.</p>
+{% with file_list=full_report_json.files|convert_json %}
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">File</th>
+            <th scope="col">Executed lines</th>
+            <th scope="col">Missing lines</th>
+            <th scope="col">Exclude lines</th>
+            <th scope="col">Covered lines</th>
+            <th scope="col">Percent covered</th>
+            <th scope="col">Missing lines count</th>
+            <th scope="col">Exclude lines count</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for file in file_list %}
+        <tr>
+            <th scope="row">{{ file.key }}</th>
+            <td>
+                {% for line in file.value.executed_lines %}
+                    {{ line }},
+                {% endfor %}
+            </td>
+            <td>
+                {% for line in file.value.missing_lines %}
+                    {{ line }},
+                {% endfor %}
+            </td>
+            <td>
+                {% for line in file.value.excluded_lines %}
+                    {{ line }},
+                {% endfor %}
+            </td>
+            <td>{{ file.value.summary.covered_lines }}</td>
+            <td>{{ file.value.summary.percent_covered_display }}%</td>
+            <td>{{ file.value.summary.missing_lines }}</td>
+            <td>{{ file.value.summary.excluded_lines }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endwith %}
+
+<br>
+
+<h3>Meta</h3>
+{% with meta_list=full_report_json.meta|convert_json %}
+    {% for meta in meta_list %}
+        <div class="row">
+            <div class="col-md-2">
+                <strong>{{ meta.key }}</strong>
+            </div>
+            <div class="col-md-10">
+                {{ meta.value }}
+            </div>
+        </div>
+    {% endfor %}
+{% endwith %}
