@@ -9,9 +9,7 @@
     <link rel="stylesheet" href="{% static 'css/index.css' %}">
     <title>{% block title %}{% endblock %}</title>
 </head>
-<style>
-    {% block styles %}{% endblock %}
-</style>
+{% block styles %}{% endblock %}
 <body>
     {% block content %}{% endblock %}
 
