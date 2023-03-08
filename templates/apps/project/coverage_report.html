@@ -24,6 +24,10 @@
         {% endif %}
     </div>
 
+    {% if coverage.description %}
+    <p>{{ coverage.description }}</p>
+    {% endif %}
+
     <p>Total coverage : {{ coverage.coverage|floatformat }} %</p>
 
     {% if full_report %}
