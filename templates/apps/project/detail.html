@@ -1,4 +1,5 @@
 {% extends "base_apps.html" %}
+{% load convert_json %}
 
 {% block title %}{{ project.name }} Detail{% endblock %}
 
@@ -37,7 +38,31 @@
     {% endif %}
     </div>
 
-    <h2>All Coverage Report{% if all_coverage|length > 1 %}s{% endif %}</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Coverage progress</h2>
+            <div>
+                <canvas id="coverageChart"></canvas>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h2>Statistics</h2>
+            {% with report_list=statistics|convert_json %}
+            {% for report in report_list %}
+            <div class="row">
+                <div class="col-4">
+                    <b>{{ report.key }}</b>
+                </div>
+                <div class="col-8">
+                    {{ report.value }}
+                </div>
+            </div>
+            {% endfor %}
+            {% endwith %}
+        </div>
+    </div>
+
+    <h2 style="padding-top: 24px;">All coverage report{% if all_coverage|length > 1 %}s{% endif %}</h2>
     {% if all_coverage %}
     {% for coverage in all_coverage %}
         <div class="row m-2 project-row">
@@ -60,8 +85,43 @@
     {% else %}
         <p>No report available</p>
     {% endif %}
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 {% endblock %}
 
 {% block scripts %}
+    <script>
+        const ctx = document.getElementById('coverageChart')
 
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: [
+                    {% for coverage in all_coverage|slice:":10" reversed %}
+                    '{{ coverage.name }}',
+                    {% endfor %}
+                ],
+                datasets: [{
+                    label: 'Coverage (%)',
+                    data: [
+                        {% for coverage in all_coverage %}
+                        '{{ coverage.coverage|floatformat }}',
+                        {% endfor %}
+                    ],
+                    fill: false,
+                    borderColor: '#c43b4d',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                // Always max at 100
+                scales: {
+                    y: {
+                        max: 100,
+                        min: 0
+                    }
+                }
+            }
+        });
+    </script>
 {% endblock %}

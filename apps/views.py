@@ -4,6 +4,7 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.db.models import Avg
 from django.shortcuts import render, redirect
 from django.utils import timezone
 
@@ -80,11 +81,20 @@ def project_detail(request, project_id):
 
     # Get all coverage
     all_coverage = CoverageSummary.objects.filter(project_id=project_id).order_by('-date')
+
+    # Create statistics
+    statistics = {
+        'Total reports': len(all_coverage),
+        'Average': f"{round(CoverageSummary.objects.filter(project_id=project_id).aggregate(Avg('coverage'))['coverage__avg'], 2)}%" if len(all_coverage) > 0 else 'Not enough data',
+        'Average (last 30 days)': f"{round(CoverageSummary.objects.filter(project_id=project_id, date__gte=timezone.now() - timezone.timedelta(days=30)).aggregate(Avg('coverage'))['coverage__avg'], 2)}%" if len(all_coverage) > 0 else 'Not enough data',
+        'Last report': f"{all_coverage[0].date.strftime('%Y-%m-%d %H:%M:%S')} ({round(all_coverage[0].coverage, 2)}%)" if len(all_coverage) > 0 else 'No reports'
+    }
     return render(request, 'apps/project/detail.html', {
         'project': project,
         'project_access': project_access,
         'not_setup_key': not_setup_key,
-        'all_coverage': all_coverage
+        'all_coverage': all_coverage,
+        'statistics': statistics
     })
 
 
