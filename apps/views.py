@@ -1,13 +1,13 @@
-import json
 import os
 
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.utils import timezone
 
-from apps.forms import CreateProjectForm, UploadKeyRenewConfirmationForm
+from apps.forms import CreateProjectForm, UploadKeyRenewConfirmationForm, AddPermissionForm, EditPermissionForm
 from apps.models import Project, ProjectAccess, ProjectUploadKey, CoverageSummary, CoverageRawDetail
 from apps.utils import random_key
 
@@ -41,6 +41,7 @@ def create_project(request):
         if form.is_valid():
             project = form.save(commit=False)
             project.user = request.user
+            project.creator = request.user
             project.save()
             ProjectAccess.objects.create(
                 project=project,
@@ -85,6 +86,121 @@ def project_detail(request, project_id):
         'not_setup_key': not_setup_key,
         'all_coverage': all_coverage
     })
+
+
+@login_required
+def project_manage_permissions(request, project_id):
+    # Check project access
+    project = Project.objects.filter(id=project_id)
+    if not project:
+        return render(request, '404.html', status=404)
+    project = project[0]
+    project_access = ProjectAccess.objects.filter(project_id=project_id, user=request.user)
+    if not project_access:
+        return render(request, '404.html', status=404)
+    project_access = project_access[0]
+    if project_access.access_option != 'admin':
+        return render(request, '403.html', status=403)
+
+    # Check project action setup status
+    all_project_access = ProjectAccess.objects.filter(project_id=project_id)
+    return render(request, 'apps/project/manage_permissions.html', {
+        'project': project,
+        'project_access': project_access,
+        'all_project_access': all_project_access
+    })
+
+
+@login_required
+def project_add_permission(request, project_id):
+    # Check project access
+    project = Project.objects.filter(id=project_id)
+    if not project:
+        return render(request, '404.html', status=404)
+    project = project[0]
+    project_access = ProjectAccess.objects.filter(project_id=project_id, user=request.user)
+    if not project_access:
+        return render(request, '404.html', status=404)
+    project_access = project_access[0]
+    if project_access.access_option != 'admin':
+        return render(request, '403.html', status=403)
+
+    # Check project action setup status
+    if request.method == 'POST':
+        form = AddPermissionForm(request.POST, project=project)
+        if form.is_valid():
+            ProjectAccess.objects.create(
+                project=project,
+                user=User.objects.get(username=form.cleaned_data['username']),
+                access_option=form.cleaned_data['permission']
+            )
+            messages.success(request, 'Permission added successfully!')
+            return redirect('apps_project_manage_permissions', project_id=project.id)
+    else:
+        form = AddPermissionForm(project=project)
+    return render(request, 'apps/project/add_permission.html', {
+        'project': project,
+        'project_access': project_access,
+        'form': form
+    })
+
+
+@login_required
+def project_edit_permission(request, project_id, project_access_id):
+    # Check project access
+    project = Project.objects.filter(id=project_id)
+    if not project:
+        return render(request, '404.html', status=404)
+    project = project[0]
+    project_access = ProjectAccess.objects.filter(project_id=project_id, user=request.user)
+    if not project_access:
+        return render(request, '404.html', status=404)
+    project_access = project_access[0]
+    if project_access.access_option != 'admin':
+        return render(request, '403.html', status=403)
+    permission = ProjectAccess.objects.filter(id=project_access_id).first()
+    if permission.user == project.creator:
+        messages.error(request, 'You can not edit permission of project creator!')
+        return redirect('apps_project_manage_permissions', project_id=project.id)
+
+    # Check project action setup status
+    if request.method == 'POST':
+        form = EditPermissionForm(request.POST, instance=permission)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Permission updated successfully!')
+            return redirect('apps_project_manage_permissions', project_id=project.id)
+    else:
+        form = EditPermissionForm(instance=permission)
+    return render(request, 'apps/project/edit_permission.html', {
+        'project': project,
+        'project_access': project_access,
+        'permission': permission,
+        'form': form
+    })
+
+
+@login_required
+def project_delete_permission(request, project_id, project_access_id):
+    # Check project access
+    project = Project.objects.filter(id=project_id)
+    if not project:
+        return render(request, '404.html', status=404)
+    project = project[0]
+    project_access = ProjectAccess.objects.filter(project_id=project_id, user=request.user)
+    if not project_access:
+        return render(request, '404.html', status=404)
+    project_access = project_access[0]
+    if project_access.access_option != 'admin':
+        return render(request, '403.html', status=403)
+    permission = ProjectAccess.objects.filter(id=project_access_id).first()
+    if permission.user == project.creator:
+        messages.error(request, 'You can not delete permission of project creator!')
+        return redirect('apps_project_manage_permissions', project_id=project.id)
+
+    permission.delete()
+    messages.success(request, 'Permission deleted successfully!')
+    return redirect('apps_project_manage_permissions', project_id=project.id)
 
 
 @login_required

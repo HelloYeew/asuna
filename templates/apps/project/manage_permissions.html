@@ -1,0 +1,60 @@
+{% extends "base_apps.html" %}
+
+{% block title %}Manage permissions for {{ project.name }}{% endblock %}
+
+{% block styles %}
+
+{% endblock %}
+
+{% block content %}
+    <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'apps_project_detail' project.id %}">{{ project.name }}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Manage permissions</li>
+        </ol>
+    </nav>
+    <div class="d-flex" style="padding-bottom: 1rem;">
+        <h1>Manage permissions</h1>
+        {% if full_report %}
+            <span class="align-middle ms-auto">
+            <a type="button" class="btn btn-primary" href="{% url 'apps_coverage_full_report' project.id coverage.id %}">
+                <span class="mdi mdi-chart-bar" aria-hidden="true" style="font-size: 20px"></span> Full report
+            </a>
+        </span>
+        {% endif %}
+    </div>
+    <div style="padding-bottom: 1rem;">
+        {% if project_access.access_option == 'admin' %}
+            <a href="{% url 'apps_project_add_permissions' project.id %}" class="btn btn-primary"><i class="mdi mdi-plus" aria-hidden="true" style="font-size: 20px"></i> Add permission</a>
+        {% endif %}
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead>
+            <tr>
+                <th scope="col">User</th>
+                <th scope="col">Access</th>
+                <th scope="col">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for access in all_project_access %}
+                <tr>
+                    <td>{{ access.user.username }} {% if project.creator == access.user %}<span class="badge rounded-pill bg-primary">Creator</span>{% endif %}</td>
+                    <td>{{ access.access_option }}</td>
+                    <td>
+                        {% if project_access.access_option == 'admin' %}
+                            <a href="{% url 'apps_project_edit_permissions' project.id access.id %}" class="btn btn-sm btn-primary {% if project.creator == access.user %}disabled{% endif %}"><i class="mdi mdi-pencil" aria-hidden="true" style="font-size: 20px"></i> Edit</a>
+                            <a href="{% url 'apps_project_delete_permissions' project.id access.id %}" class="btn btn-sm btn-danger {% if project.creator == access.user %}disabled{% endif %}"><i class="mdi mdi-delete" aria-hidden="true" style="font-size: 20px"></i> Delete</a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+
+{% endblock %}

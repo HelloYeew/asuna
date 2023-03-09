@@ -1,6 +1,7 @@
 from django import forms
 
-from apps.models import Project, LANGUAGES
+from apps import models
+from apps.models import Project, LANGUAGES, ProjectAccess
 
 
 class CreateProjectForm(forms.ModelForm):
@@ -54,3 +55,54 @@ class UploadKeyRenewConfirmationForm(forms.Form):
         if not self.user.check_password(password):
             raise forms.ValidationError('Incorrect password.')
         return password
+
+
+class AddPermissionForm(forms.Form):
+    username = forms.CharField(
+        label='Username',
+        help_text='The username of the user you want to add.',
+        max_length=50,
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'asuna'})
+    )
+
+    permission = forms.ChoiceField(
+        label='Permission',
+        help_text='The permission you want to give to the user.',
+        choices=models.ACCESS_OPTIONS,
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
+
+    class Meta:
+        fields = ['username', 'permission']
+
+    def __init__(self, *args, **kwargs):
+        self.project = kwargs.pop('project')
+        super().__init__(*args, **kwargs)
+
+    def clean_username(self):
+        username = self.cleaned_data['username']
+        if not models.User.objects.filter(username=username).exists():
+            # add error to username
+            raise forms.ValidationError('User does not exist.')
+        return username
+
+    def clean(self):
+        cleaned_data = super().clean()
+        username = cleaned_data.get('username')
+        if ProjectAccess.objects.filter(project=self.project, user__username=username).exists():
+            # add error to username
+            raise forms.ValidationError('User already has access to this project.')
+        return cleaned_data
+
+
+class EditPermissionForm(forms.ModelForm):
+    access_option = forms.ChoiceField(
+        label='Permission',
+        help_text='The permission you want to give to the user.',
+        choices=models.ACCESS_OPTIONS,
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
+
+    class Meta:
+        model = ProjectAccess
+        fields = ['access_option']
