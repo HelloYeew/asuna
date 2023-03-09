@@ -59,7 +59,7 @@ class CoverageSummary(models.Model):
 
 class CoverageRawDetail(models.Model):
     summary = models.ForeignKey(CoverageSummary, on_delete=models.CASCADE)
-    folder_name = models.CharField(max_length=10, blank=True, null=True)
+    folder_name = models.CharField(max_length=20, blank=True, null=True)
     raw_detail = models.JSONField(default=dict)
 
     def __str__(self):

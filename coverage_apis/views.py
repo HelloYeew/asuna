@@ -30,7 +30,7 @@ class CoverageUploadView(views.APIView):
                 coverage=serializer.validated_data['percentage']
             )
             # Create coverage raw detail
-            upload_folder_name = random_key(8)
+            upload_folder_name = random_key(16)
             CoverageRawDetail.objects.create(
                 summary=coverage_summary,
                 folder_name=upload_folder_name,
