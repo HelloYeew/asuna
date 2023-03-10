@@ -1,4 +1,6 @@
-<img src="static/asuna-icon.png" alt="Asuna" width="300" />
+<div align="center">
+  <img src="static/asuna-icon.png" alt="Asuna" width="300" />
+</div>
 
 # Asuna
 
