@@ -10,7 +10,7 @@ ACCESS_OPTIONS = (
 
 LANGUAGES = (
     ('python-coveragepy', 'Python (Coverage.py)'),
-    ('javascript-istanbul', 'JavaScript (Istanbul)')
+    ('nodejs-istanbul', 'Node.js (Istanbul)')
 )
 
 
