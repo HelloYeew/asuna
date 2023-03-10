@@ -10,11 +10,12 @@
 
 ## Supported coverage report
 
-- [coverage.py](https://coverage.readthedocs.io/)
+- [Python (coverage.py)](https://coverage.readthedocs.io/)
+- [Node.js (Istanbul)](https://istanbul.js.org/)
 
 ## Using asuna with your project
 
-You can use asuna with our GitHub action workflow. More info in [wiki](https://github.com/HelloYeew/asuna/wiki/Use-Asuna-with-your-project)
+More info in [wiki](https://github.com/HelloYeew/asuna/wiki)
 
 ## Start developing asuna
 
