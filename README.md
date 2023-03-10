@@ -1,4 +1,6 @@
-# asuna
+<img src="static/asuna-icon.png" alt="Asuna" width="300" />
+
+# Asuna
 
 🗡️A code coverage report tool for your project.
 
@@ -13,7 +15,7 @@
 - [Python (coverage.py)](https://coverage.readthedocs.io/)
 - [Node.js (Istanbul)](https://istanbul.js.org/)
 
-## Using asuna with your project
+## Using Asuna with your project
 
 More info in [wiki](https://github.com/HelloYeew/asuna/wiki)
 
