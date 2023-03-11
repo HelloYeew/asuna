@@ -166,6 +166,10 @@ a:hover {
     color: var(--asuna-text);
 }
 
+.navbar-brand:hover {
+    color: var(--asuna-hover);
+}
+
 .nav-link {
     color: var(--asuna-text);
 }
