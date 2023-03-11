@@ -32,6 +32,24 @@
     transition: all .2s;
 }
 
+.green * {
+    --asuna-background: #fbfefa;
+    --asuna-background-rgb: 251, 254, 250;
+    --asuna-background-darker: #e2ffde;
+    --asuna-background-darker-rgb: 226, 255, 222;
+    --asuna-border: #b2eab0;
+    --asuna-border-rgb: 178, 234, 176;
+    --asuna-disabled: #7aea72;
+    --asuna-disabled-rgb: 122, 234, 114;
+    --asuna-primary: #59c43b;
+    --asuna-primary-rgb: 89, 196, 59;
+    --asuna-hover: #3e8533;
+    --asuna-hover-rgb: 62, 133, 51;
+    --asuna-text: #222921;
+    --asuna-text-rgb: 34, 41, 33;
+    --asuna-translucent: rgba(81, 101, 76, 0.17);
+}
+
 ::selection {
     color: var(--asuna-background);
     background: var(--asuna-disabled);
@@ -103,4 +121,9 @@ a:hover {
     --bs-dropdown-link-active-bg: var(--asuna-disabled);
     --bs-dropdown-link-disabled-color: #adb5bd;
     --bs-dropdown-header-color: var(--asuna-primary);
+}
+
+.badge-asuna {
+    color: var(--asuna-background);
+    background-color: var(--asuna-hover);
 }
