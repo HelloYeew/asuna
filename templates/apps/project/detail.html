@@ -98,7 +98,7 @@
             data: {
                 labels: [
                     {% for coverage in all_coverage|slice:":10" reversed %}
-                    '{{ coverage.name }}',
+                    '{{ coverage.date }}',
                     {% endfor %}
                 ],
                 datasets: [{
