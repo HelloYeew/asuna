@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" {% if user.is_authenticated and user.settings %}class="{{ user.settings.theme }}"{% endif %}>
 <head>
     <meta charset="UTF-8">
     {% include "favicon.html" %}
@@ -14,7 +14,7 @@
 <style>
     {% block styles %}{% endblock %}
 </style>
-<body {% if user.is_authenticated and user.settings %}class="{{ user.settings.theme }}"{% endif %}>
+<body>
     <nav class="navbar navbar-expand-lg fixed-top" aria-label="Navbar" style="background-color: var(--asuna-background-darker);">
         <div class="container">
             <a class="navbar-brand" href="{% url 'apps_home' %}"><img src="{% static 'asuna-icon-small.jpg' %}" alt="Asuna" height="40px" width="40px" style="border-radius: 999px;"> Asuna</a>

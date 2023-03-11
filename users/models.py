@@ -4,7 +4,8 @@ from django.db import models
 
 THEME_SETTINGS = (
     ('', 'Default'),
-    ('green', 'Green')
+    ('green', 'Green'),
+    ('dark', 'Dark Default'),
 )
 
 

@@ -92,6 +92,7 @@
 {% block scripts %}
     <script>
         const ctx = document.getElementById('coverageChart')
+        const asunaPrimaryColor = getComputedStyle(document.documentElement).getPropertyValue('--asuna-primary')
 
         new Chart(ctx, {
             type: 'line',
@@ -109,7 +110,7 @@
                         {% endfor %}
                     ],
                     fill: false,
-                    borderColor: '#c43b4d',
+                    borderColor: asunaPrimaryColor,
                     borderWidth: 1
                 }]
             },

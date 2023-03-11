@@ -32,6 +32,24 @@
     transition: all .2s;
 }
 
+.dark * {
+    --asuna-background: #1e1d1d;
+    --asuna-background-rgb: 30, 29, 29;
+    --asuna-background-darker: #645757;
+    --asuna-background-darker-rgb: 100, 87, 87;
+    --asuna-border: #503d3f;
+    --asuna-border-rgb: 80, 61, 63;
+    --asuna-disabled: #ab787d;
+    --asuna-disabled-rgb: 171, 120, 125;
+    --asuna-primary: #d79aa5;
+    --asuna-primary-rgb: 215, 154, 165;
+    --asuna-hover: #db86a2;
+    --asuna-hover-rgb: 219, 134, 162;
+    --asuna-text: #e1cdcd;
+    --asuna-text-rgb: 225, 205, 205;
+    --asuna-translucent: rgba(182, 139, 144, 0.17);
+}
+
 .green * {
     --asuna-background: #fbfefa;
     --asuna-background-rgb: 251, 254, 250;
@@ -48,6 +66,10 @@
     --asuna-text: #222921;
     --asuna-text-rgb: 34, 41, 33;
     --asuna-translucent: rgba(81, 101, 76, 0.17);
+}
+
+body {
+    background-color: var(--asuna-background);
 }
 
 ::selection {
@@ -98,6 +120,10 @@ a:hover {
     color: var(--asuna-hover);
 }
 
+.breadcrumb-item.active {
+    color: var(--asuna-text);
+}
+
 .form-control {
     color: var(--bs-body-color);
     background-color: var(--asuna-background);
@@ -110,6 +136,10 @@ a:hover {
     border-color: var(--asuna-border);
     outline: 0;
     box-shadow: 0 0 0 3px rgba(var(--asuna-border-rgb), 0.5);
+}
+
+.form-text {
+    color: var(--asuna-text);
 }
 
 .dropdown-menu {
@@ -126,4 +156,20 @@ a:hover {
 .badge-asuna {
     color: var(--asuna-background);
     background-color: var(--asuna-hover);
+}
+
+.navbar-brand {
+    color: var(--asuna-text);
+}
+
+.nav-link {
+    color: var(--asuna-text);
+}
+
+.nav-link.show {
+    color: var(--asuna-text);
+}
+
+.nav-link:hover {
+    color: var(--asuna-hover);
 }

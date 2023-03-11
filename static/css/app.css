@@ -3,10 +3,6 @@
     padding-bottom: 1.5rem;
 }
 
-body {
-    background-color: var(--asuna-background);
-}
-
 
 .project-row {
     background-color: var(--asuna-background);
