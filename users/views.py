@@ -31,13 +31,13 @@ def signup(request):
 @login_required
 def settings(request):
     if request.method == 'POST':
-        form = UserSettingsForm(request.POST, instance=request.user.settings)
-        if form.is_valid():
-            form.save()
+        settings_form = UserSettingsForm(request.POST, instance=request.user.settings)
+        if settings_form.is_valid():
+            settings_form.save()
             messages.success(request, 'Settings saved successfully.')
             return redirect('settings')
     else:
-        form = UserSettingsForm(instance=request.user.settings)
+        settings_form = UserSettingsForm(instance=request.user.settings)
     return render(request, 'users/settings.html', {
-        'form': form
+        'settings_form': settings_form
     })
