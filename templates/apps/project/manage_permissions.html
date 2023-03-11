@@ -40,7 +40,7 @@
             <tbody>
             {% for access in all_project_access %}
                 <tr>
-                    <td>{{ access.user.username }} {% if project.creator == access.user %}<span class="badge rounded-pill bg-primary">Creator</span>{% endif %}</td>
+                    <td>{{ access.user.username }} {% if project.creator == access.user %}<span class="badge rounded-pill badge-asuna">Creator</span>{% endif %}</td>
                     <td>{{ access.access_option }}</td>
                     <td>
                         {% if project_access.access_option == 'admin' %}

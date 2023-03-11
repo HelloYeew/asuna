@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" {% if user.is_authenticated and user.settings %}class="{{ user.settings.theme }}"{% endif %}>
 <head>
     <meta charset="UTF-8">
     {% include "favicon.html" %}
@@ -46,6 +46,10 @@
                             <ul class="dropdown-menu">
                                 {% if user.is_superuser %}
                                     <li><a class="dropdown-item" href="{% url 'admin:index' %}">Admin</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                {% endif %}
+                                {% if user.is_authenticated %}
+                                    <li><a class="dropdown-item" href="{% url 'settings' %}">Settings</a></li>
                                     <li><hr class="dropdown-divider"></li>
                                 {% endif %}
                                 <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>

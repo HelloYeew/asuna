@@ -1,0 +1,35 @@
+{% extends "base_apps.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}Edit permission to {{ project.name }}{% endblock %}
+
+{% block styles %}
+
+{% endblock %}
+
+{% block content %}
+    <h1 style="padding-top: 1rem; padding-bottom: 1rem;">Settings</h1>
+    <p></p>
+    <form method="POST">
+        {% csrf_token %}
+        {{ settings_form | crispy }}
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // get valur from id_theme select
+    let id_theme = document.getElementById("id_theme");
+    let theme = id_theme.value;
+
+    // Add listener to add class to root
+    id_theme.addEventListener("change", function() {
+        theme = id_theme.value;
+        // clean class to blank
+        document.documentElement.className = "";
+        // add class to root
+        document.documentElement.classList.add(theme);
+    });
+</script>
+{% endblock %}

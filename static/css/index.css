@@ -29,12 +29,56 @@
     font-family: 'Comfortaa', cursive;
     font-size: 16px;
 
-    transition: all .2s;
+    transition: all .2s!important;
+}
+
+.dark * {
+    --asuna-background: #1e1d1d;
+    --asuna-background-rgb: 30, 29, 29;
+    --asuna-background-darker: #645757;
+    --asuna-background-darker-rgb: 100, 87, 87;
+    --asuna-border: #503d3f;
+    --asuna-border-rgb: 80, 61, 63;
+    --asuna-disabled: #ab787d;
+    --asuna-disabled-rgb: 171, 120, 125;
+    --asuna-primary: #d79aa5;
+    --asuna-primary-rgb: 215, 154, 165;
+    --asuna-hover: #db86a2;
+    --asuna-hover-rgb: 219, 134, 162;
+    --asuna-text: #e1cdcd;
+    --asuna-text-rgb: 225, 205, 205;
+    --asuna-translucent: rgba(182, 139, 144, 0.17);
+}
+
+.green * {
+    --asuna-background: #fbfefa;
+    --asuna-background-rgb: 251, 254, 250;
+    --asuna-background-darker: #e2ffde;
+    --asuna-background-darker-rgb: 226, 255, 222;
+    --asuna-border: #b2eab0;
+    --asuna-border-rgb: 178, 234, 176;
+    --asuna-disabled: #7aea72;
+    --asuna-disabled-rgb: 122, 234, 114;
+    --asuna-primary: #59c43b;
+    --asuna-primary-rgb: 89, 196, 59;
+    --asuna-hover: #3e8533;
+    --asuna-hover-rgb: 62, 133, 51;
+    --asuna-text: #222921;
+    --asuna-text-rgb: 34, 41, 33;
+    --asuna-translucent: rgba(81, 101, 76, 0.17);
+}
+
+body {
+    background-color: var(--asuna-background);
 }
 
 ::selection {
     color: var(--asuna-background);
     background: var(--asuna-disabled);
+}
+
+::placeholder {
+    color: var(--asuna-disabled)!important;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -80,6 +124,10 @@ a:hover {
     color: var(--asuna-hover);
 }
 
+.breadcrumb-item.active {
+    color: var(--asuna-text);
+}
+
 .form-control {
     color: var(--bs-body-color);
     background-color: var(--asuna-background);
@@ -94,6 +142,10 @@ a:hover {
     box-shadow: 0 0 0 3px rgba(var(--asuna-border-rgb), 0.5);
 }
 
+.form-text {
+    color: var(--asuna-text);
+}
+
 .dropdown-menu {
     --bs-dropdown-bg: var(--asuna-background);
     --bs-dropdown-link-color: var(--bs-body-color);
@@ -103,4 +155,25 @@ a:hover {
     --bs-dropdown-link-active-bg: var(--asuna-disabled);
     --bs-dropdown-link-disabled-color: #adb5bd;
     --bs-dropdown-header-color: var(--asuna-primary);
+}
+
+.badge-asuna {
+    color: var(--asuna-background);
+    background-color: var(--asuna-hover);
+}
+
+.navbar-brand {
+    color: var(--asuna-text);
+}
+
+.nav-link {
+    color: var(--asuna-text);
+}
+
+.nav-link.show {
+    color: var(--asuna-text);
+}
+
+.nav-link:hover {
+    color: var(--asuna-hover);
 }
