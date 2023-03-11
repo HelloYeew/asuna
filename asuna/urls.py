@@ -29,6 +29,7 @@ urlpatterns = [
     path('login/', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),
     path('signup/', users_views.signup, name='signup'),
     path('logout/', users_views.LogoutAndRedirect.as_view(), name='logout'),
+    path('settings/', users_views.settings, name='settings'),
     path('apps/', include('apps.urls')),
     path('', include('pages.urls')),
     path('api/coverage/', include('coverage_apis.urls')),

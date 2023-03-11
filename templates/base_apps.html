@@ -14,7 +14,7 @@
 <style>
     {% block styles %}{% endblock %}
 </style>
-<body>
+<body {% if user.is_authenticated and user.settings %}class="{{ user.settings.theme }}"{% endif %}>
     <nav class="navbar navbar-expand-lg fixed-top" aria-label="Navbar" style="background-color: var(--asuna-background-darker);">
         <div class="container">
             <a class="navbar-brand" href="{% url 'apps_home' %}"><img src="{% static 'asuna-icon-small.jpg' %}" alt="Asuna" height="40px" width="40px" style="border-radius: 999px;"> Asuna</a>
@@ -46,6 +46,10 @@
                             <ul class="dropdown-menu">
                                 {% if user.is_superuser %}
                                     <li><a class="dropdown-item" href="{% url 'admin:index' %}">Admin</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                {% endif %}
+                                {% if user.is_authenticated %}
+                                    <li><a class="dropdown-item" href="{% url 'settings' %}">Settings</a></li>
                                     <li><hr class="dropdown-divider"></li>
                                 {% endif %}
                                 <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>

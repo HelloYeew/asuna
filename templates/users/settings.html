@@ -1,0 +1,22 @@
+{% extends "base_apps.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}Edit permission to {{ project.name }}{% endblock %}
+
+{% block styles %}
+
+{% endblock %}
+
+{% block content %}
+    <h1 style="padding-top: 1rem; padding-bottom: 1rem;">Settings</h1>
+    <p></p>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form | crispy }}
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+{% endblock %}
+
+{% block scripts %}
+
+{% endblock %}
