@@ -29,7 +29,7 @@
     font-family: 'Comfortaa', cursive;
     font-size: 16px;
 
-    transition: all .2s;
+    transition: all .2s!important;
 }
 
 .dark * {
@@ -75,6 +75,10 @@ body {
 ::selection {
     color: var(--asuna-background);
     background: var(--asuna-disabled);
+}
+
+::placeholder {
+    color: var(--asuna-disabled)!important;
 }
 
 h1, h2, h3, h4, h5, h6 {
