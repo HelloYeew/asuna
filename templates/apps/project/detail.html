@@ -98,7 +98,7 @@
             type: 'line',
             data: {
                 labels: [
-                    {% for coverage in all_coverage|slice:":10" reversed %}
+                    {% for coverage in all_coverage|slice:":10" %}
                     '{{ coverage.date }}',
                     {% endfor %}
                 ],
