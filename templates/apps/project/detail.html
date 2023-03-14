@@ -98,14 +98,14 @@
             type: 'line',
             data: {
                 labels: [
-                    {% for coverage in all_coverage|slice:":10" reversed %}
+                    {% for coverage in all_coverage_graph %}
                     '{{ coverage.date }}',
                     {% endfor %}
                 ],
                 datasets: [{
                     label: 'Coverage (%)',
                     data: [
-                        {% for coverage in all_coverage reversed %}
+                        {% for coverage in all_coverage_graph %}
                         '{{ coverage.coverage|floatformat }}',
                         {% endfor %}
                     ],

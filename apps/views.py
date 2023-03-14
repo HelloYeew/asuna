@@ -81,6 +81,8 @@ def project_detail(request, project_id):
 
     # Get all coverage
     all_coverage = CoverageSummary.objects.filter(project_id=project_id).order_by('-date')
+    # Get all coverage for graph (get the last 10 coverage and reverse it)
+    all_coverage_graph = CoverageSummary.objects.filter(project_id=project_id).order_by('-date')[:10][::-1]
 
     # Create statistics
     statistics = {
@@ -96,6 +98,7 @@ def project_detail(request, project_id):
         'project_access': project_access,
         'not_setup_key': not_setup_key,
         'all_coverage': all_coverage,
+        'all_coverage_graph': all_coverage_graph,
         'statistics': statistics
     })
 
