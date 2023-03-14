@@ -87,6 +87,8 @@ def project_detail(request, project_id):
         'Total reports': len(all_coverage),
         'Average': f"{round(CoverageSummary.objects.filter(project_id=project_id).aggregate(Avg('coverage'))['coverage__avg'], 2)}%" if len(all_coverage) > 0 else 'Not enough data',
         'Average (last 30 days)': f"{round(CoverageSummary.objects.filter(project_id=project_id, date__gte=timezone.now() - timezone.timedelta(days=30)).aggregate(Avg('coverage'))['coverage__avg'], 2)}%" if len(all_coverage) > 0 else 'Not enough data',
+        'Highest': f"{round(CoverageSummary.objects.filter(project_id=project_id).order_by('-coverage')[0].coverage, 2)}% ({CoverageSummary.objects.filter(project_id=project_id).order_by('-coverage')[0].date.strftime('%Y-%m-%d %H:%M:%S')})" if len(all_coverage) > 0 else 'Not enough data',
+        'Lowest': f"{round(CoverageSummary.objects.filter(project_id=project_id).order_by('coverage')[0].coverage, 2)}% ({CoverageSummary.objects.filter(project_id=project_id).order_by('coverage')[0].date.strftime('%Y-%m-%d %H:%M:%S')})" if len(all_coverage) > 0 else 'Not enough data',
         'Last report': f"{all_coverage[0].date.strftime('%Y-%m-%d %H:%M:%S')} ({round(all_coverage[0].coverage, 2)}%)" if len(all_coverage) > 0 else 'No reports'
     }
     return render(request, 'apps/project/detail.html', {
