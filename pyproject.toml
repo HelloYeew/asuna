@@ -16,7 +16,7 @@ psycopg2-binary = "^2.9.5"
 crispy-bootstrap5 = "^0.7"
 djangorestframework = "^3.14.0"
 markdown = "^3.4.3"
-django-filter = "^23.1"
+django-filter = "^23.2"
 
 
 [build-system]
