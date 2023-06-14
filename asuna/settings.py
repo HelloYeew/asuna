@@ -243,4 +243,5 @@ LOGGING = {
     }
 }
 
-DATA_UPLOAD_MAX_NUMBER_FIELDS = 1024000
+# Disable max number of fields in form
+DATA_UPLOAD_MAX_NUMBER_FIELDS = None
