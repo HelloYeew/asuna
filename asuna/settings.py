@@ -245,3 +245,4 @@ LOGGING = {
 
 # Disable max number of fields in form
 DATA_UPLOAD_MAX_NUMBER_FIELDS = None
+DATA_UPLOAD_MAX_NUMBER_FILES = None
