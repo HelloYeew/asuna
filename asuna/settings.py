@@ -164,3 +164,81 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
+
+# Logging
+# https://docs.djangoproject.com/en/4.2/topics/logging/
+
+LOGS_FILE = 'logs/asuna.log'
+
+# Check if logs directory exists, if not create it
+if not os.path.exists('logs'):
+    os.makedirs('logs')
+
+# Create log file if doesn't exist
+if not os.path.exists(LOGS_FILE):
+    open(LOGS_FILE, 'w').close()
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    "filters": {
+        "require_debug_false": {
+            "()": "django.utils.log.RequireDebugFalse",
+        },
+        "require_debug_true": {
+            "()": "django.utils.log.RequireDebugTrue",
+        },
+    },
+    'formatters': {
+        'standard': {
+            'format': '[%(asctime)s] {%(module)s} [%(levelname)s] - %(message)s',
+            'datefmt': '%d-%m-%Y %H:%M:%S %z',
+        },
+        "django.server": {
+            "()": "django.utils.log.ServerFormatter",
+            "format": "[{server_time}] {message}",
+            "style": "{",
+        }
+    },
+    'handlers': {
+        'console': {
+            'level': 'INFO' if not DEBUG else 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'standard',
+        },
+        'file': {
+            'level': 'INFO' if not DEBUG else 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': LOGS_FILE,
+            'formatter': 'standard',
+            # Clean log after server restart if DEBUG is True
+            'mode': 'w' if DEBUG else 'a',
+        },
+        "django.server": {
+            "level": "INFO",
+            "class": "logging.StreamHandler",
+            "formatter": "django.server",
+        },
+        "mail_admins": {
+            "level": "ERROR",
+            "filters": ["require_debug_false"],
+            "class": "django.utils.log.AdminEmailHandler",
+        },
+    },
+    'loggers': {
+        '': {
+            'handlers': ['console', 'file'],
+            'level': 'INFO' if not DEBUG else 'DEBUG',
+            'propagate': True
+        },
+        "django": {
+            "handlers": ["console", "mail_admins", 'file'],
+            "level": "INFO",
+        },
+        "django.server": {
+            "handlers": ["django.server", 'file'],
+            "level": "INFO",
+            "propagate": False,
+        },
+    }
+}
