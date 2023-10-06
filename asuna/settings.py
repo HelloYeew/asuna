@@ -86,6 +86,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'asuna.wsgi.application'
 
+CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS', cast=Csv(), default='')
+
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
